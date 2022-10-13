@@ -4,7 +4,7 @@ POST http://localhost:3000/players/
 Content-Type:application/json
 
 {
-    "playerId":15,
+    "playerId":22,
     "playerName":"sai",
     "jerseyNumber":66,
     "role":"batsman"

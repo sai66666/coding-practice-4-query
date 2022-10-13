@@ -6,6 +6,7 @@ const sqlite3 = require("sqlite3");
 const path = require("path");
 const filePath = path.join(__dirname, "cricketTeam.db");
 let db = null;
+
 conncetServerAndDb = async () => {
   try {
     db = await open({ filename: filePath, driver: sqlite3.Database });
@@ -17,7 +18,9 @@ conncetServerAndDb = async () => {
     process.exit(1);
   }
 };
+
 conncetServerAndDb();
+
 app.get("/players/", async (req, res) => {
   const query = `select * from cricket_team`;
   const playersList = await db.all(query);
@@ -36,16 +39,18 @@ app.get("/players/", async (req, res) => {
   }
   res.send(result);
 });
+
 app.post("/players/", async (req, res) => {
   const reqBody = req.body;
   const { playerId, playerName, jerseyNumber, role } = reqBody;
   const query = `INSERT INTO
   cricket_team (player_id,player_name,jersey_number,role) 
-  VALUES (${playerId},'${playerName}',${jerseyNumber},'${role}')`;
+  VALUES ( ${playerId},'${playerName}',${jerseyNumber},'${role}');`;
   const updateResult = await db.run(query);
   const updateId = updateResult.lastId;
   res.send("Player Added to Team");
 });
+
 app.get("/players/:playerId/", async (req, res) => {
   const { playerId } = req.params;
   const query = `select *
@@ -54,6 +59,7 @@ app.get("/players/:playerId/", async (req, res) => {
   const getPlayer = await db.get(query);
   res.send(getPlayer);
 });
+
 app.put("/players/:playerIdBody/", async (req, res) => {
   const { playerIdBody } = req.params;
   const { playerId, playerName, jerseyNumber, role } = req.body;
@@ -68,9 +74,9 @@ app.put("/players/:playerIdBody/", async (req, res) => {
   res.send("Player Details Updated");
 });
 
-app.delete("/players/:deleteIdPlayer/", async (req, res) => {
-  const { deleteIdPlayer } = req.params;
-  const query = `delete from cricket_team where player_id=${deleteIdPlayer}`;
+app.delete("/players/:playerId/", async (req, res) => {
+  const { playerId } = req.params;
+  const query = `delete from cricket_team where player_id=${playerId}`;
   const deleteData = await db.run(query);
   res.send("Player Removed");
 });
