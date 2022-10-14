@@ -4,19 +4,18 @@ POST http://localhost:3000/players/
 Content-Type:application/json
 
 {
-    "playerId":22,
     "playerName":"sai",
     "jerseyNumber":66,
     "role":"batsman"
 }
 ###
-GET http://localhost:3000/players/1/
+GET http://localhost:3000/players/4/
 ###
 PUT http://localhost:3000/players/1/
 Content-Type:application/json
 
 {
-    "playerId":1,
+    "playerId":4,
     "playerName":"malli",
     "jerseyNumber":10,
     "role":"All rounder"
